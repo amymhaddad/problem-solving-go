@@ -14,16 +14,15 @@ func main() {
 	var word string
 	fmt.Scanln(&word)
 
-	count_chars(word) 
+	total_letters := count_chars(word) 
+	fmt.Println(total_letters)
 }
 
-func count_chars(word) int{
-	
-	total_chars = 0
+func count_chars(word string) int{
+	total_chars := 0
 
 	for i := 0; i < len(word); i ++ {
 		total_chars += 1
 	}
 	return total_chars
-
 }
