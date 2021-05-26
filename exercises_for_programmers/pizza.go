@@ -7,34 +7,44 @@ Example Output
 Each person gets 2 pieces of pizza. There are 0 leftover pieces.
 */
 
-
 package main
 
 import (
 	"fmt"
-	 //"strconv"
- )
+	"strconv"
+)
 
 //Is it best practice to use the functions to get the return values and then use the
-//main funcion to DO somethign w/the return values? So in this case I could...
+//main funcion to DO somethign w/the return values?
 func main() {
 
-	fmt.Println(calculate_pizza_slices())
-	
+	people := calculate_pizza_slices()
+	fmt.Println(people)
 }
 
-func calculate_pizza_slices() int {
+
+//Can't ask for input sequentially. Otherwise the questions get asked back to back and I can't add input for each question
+func calculate_pizza_slices() string  {
 	
-	// fmt.Println("How many people? ")
-	// var total_people int
-	// fmt.Scanln(&total_people)
-    //
+	fmt.Println("How many people? ")
+	var total_people int
+	fmt.Scanln("%d", &total_people)
+
 	fmt.Println("How many pizzas do you have? ")
 	var total_pizzas int
 	fmt.Scanf("%d", &total_pizzas)
+	
+	pizza_slices := total_people * total_pizzas
+	slices_per_person := total_people / pizza_slices
+	leftovers := total_people % pizza_slices
 
+	fmt.Println(slices_per_person, leftovers)
 
-//	i :=strconv.Itoa(total_people)
-	return total_pizzas
+	total_slices := strconv.Itoa(slices_per_person)
+	total_leftovers := strconv.Itoa(leftovers)
+	
+	calculation := "Each person gets " + total_slices + "pieces of pizza. There are " + total_leftovers + "leftover pieces."
+	return calculation
+ 
 
 }		
