@@ -10,8 +10,31 @@ Each person gets 2 pieces of pizza. There are 0 leftover pieces.
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	 //"strconv"
+ )
 
+//Is it best practice to use the functions to get the return values and then use the
+//main funcion to DO somethign w/the return values? So in this case I could...
 func main() {
-	fmt.Println("vim-go")
+
+	fmt.Println(calculate_pizza_slices())
+	
 }
+
+func calculate_pizza_slices() int {
+	
+	// fmt.Println("How many people? ")
+	// var total_people int
+	// fmt.Scanln(&total_people)
+    //
+	fmt.Println("How many pizzas do you have? ")
+	var total_pizzas int
+	fmt.Scanf("%d", &total_pizzas)
+
+
+//	i :=strconv.Itoa(total_people)
+	return total_pizzas
+
+}		
