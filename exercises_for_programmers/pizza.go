@@ -14,37 +14,32 @@ import (
 	"strconv"
 )
 
-//Is it best practice to use the functions to get the return values and then use the
-//main funcion to DO somethign w/the return values?
 func main() {
-
-	people := calculate_pizza_slices()
-	fmt.Println(people)
+	fmt.Println(calculate_pizza_slices())
 }
 
 
-//Can't ask for input sequentially. Otherwise the questions get asked back to back and I can't add input for each question
 func calculate_pizza_slices() string  {
+	//Put var declarations up top and use multiple var declariation in 1 line
+	var total_people, total_pizzas int
 	
-	fmt.Println("How many people? ")
-	var total_people int
-	fmt.Scanln("%d", &total_people)
+	fmt.Printf("How many people? ")
+	fmt.Scanf("%d\n", &total_people)
 
-	fmt.Println("How many pizzas do you have? ")
-	var total_pizzas int
-	fmt.Scanf("%d", &total_pizzas)
+	fmt.Println()
+
+	fmt.Printf("How many pizzas do you have? ")
+	fmt.Scanf("%d\n", &total_pizzas)
+
+	fmt.Println(total_people, total_pizzas)
 	
 	pizza_slices := total_people * total_pizzas
-	slices_per_person := total_people / pizza_slices
-	leftovers := total_people % pizza_slices
-
-	fmt.Println(slices_per_person, leftovers)
+	slices_per_person, leftovers := pizza_slices / total_people, pizza_slices % total_people
 
 	total_slices := strconv.Itoa(slices_per_person)
 	total_leftovers := strconv.Itoa(leftovers)
 	
-	calculation := "Each person gets " + total_slices + "pieces of pizza. There are " + total_leftovers + "leftover pieces."
-	return calculation
- 
+	calculation := "Each person gets " + total_slices + " pieces of pizza. There are " + total_leftovers + " leftover pieces."
 
+	return calculation
 }		
