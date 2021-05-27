@@ -15,11 +15,15 @@ import (
 )
 
 func main() {
-	fmt.Println(calculate_pizza_slices())
+	slices_per_person, leftover_slices := calculate_pizza_slices()
+	pizza_distribution := "Each person gets " + slices_per_person + " total slices of pizza."
+	total_leftovers := " There are " + leftover_slices + " slices of pizza left over."
+	fmt.Println(pizza_distribution + total_leftovers)
 }
 
-func calculate_pizza_slices() (string, string, string){
 
+
+func calculate_pizza_slices() (string, string){
 	var people, pizzas, slices_per_pizza int
 
 	fmt.Printf("How many people? \n")
@@ -28,7 +32,6 @@ func calculate_pizza_slices() (string, string, string){
 	fmt.Printf("How many pizzas do you have? \n")
 	fmt.Scanf("%d/n", &pizzas)
 
-
 	fmt.Printf("How many slices per pizza? \n")
 	fmt.Scanf("%d/n", &slices_per_pizza)
 	
@@ -36,8 +39,5 @@ func calculate_pizza_slices() (string, string, string){
 	slices_per_person := total_pizza_slices / people
 	leftover_slices := total_pizza_slices % people
 
-
-	return strconv.Itoa(total_pizza_slices), strconv.Itoa(slices_per_person), strconv.Itoa(leftover_slices)
-
-
+	return strconv.Itoa(slices_per_person), strconv.Itoa(leftover_slices)
 }
