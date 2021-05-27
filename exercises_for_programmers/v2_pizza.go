@@ -21,19 +21,17 @@ func main() {
 	fmt.Println(pizza_distribution + total_leftovers)
 }
 
-
-
 func calculate_pizza_slices() (string, string){
 	var people, pizzas, slices_per_pizza int
 
-	fmt.Printf("How many people? \n")
-	fmt.Scanf("%d/n", &people)
+	fmt.Printf("How many people? ")
+	fmt.Scanf("%d\n", &people)
 
-	fmt.Printf("How many pizzas do you have? \n")
-	fmt.Scanf("%d/n", &pizzas)
+	fmt.Printf("How many pizzas do you have? ")
+	fmt.Scanf("%d\n", &pizzas)
 
-	fmt.Printf("How many slices per pizza? \n")
-	fmt.Scanf("%d/n", &slices_per_pizza)
+	fmt.Printf("How many slices per pizza? ")
+	fmt.Scanf("%d\n", &slices_per_pizza)
 	
 	total_pizza_slices := pizzas * slices_per_pizza 
 	slices_per_person := total_pizza_slices / people
