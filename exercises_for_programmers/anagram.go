@@ -12,51 +12,57 @@ Example Output
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"reflect"
+	"strings"
+)
 
 func main() {
+	fmt.Println("Enter two strings and I'll tell you if they're anagrams.")
+	
+	word1, word2 := user_input()
+	word1_letter_counter := count_letters(word1)
+	word2_letter_counter := count_letters(word2)
 
-	count_letters()
+	anagram := is_anagram(word1_letter_counter, word2_letter_counter)
+
+	if anagram {
+		fmt.Println(word1 + " and " + word2+ " are anagrams.")
+	}
+
 }
 
+//Can't I pass a map as a param? Is this the correct syntax?
+func is_anagram(map1 map[rune]int, map2 map[rune]int) bool {
+	return reflect.DeepEqual(map1, map2)
+}
 
-func count_letters() {
-	word := "tonee"
-	letters_to_bytes := []byte(word)
-	counts_per_letter := map[int] int{}
+func user_input() (string, string){
+	var word1, word2 string 
+	
+	fmt.Printf("Enter the first string: ")
+	fmt.Scanf("%s", &word1)
 
-	for _, letter := range letters_to_bytes {
-		key := int(letter)
-		if _, ok := counts_per_letter[key]; ok {
-			counts_per_letter[key] += 1
+	fmt.Printf("Enter the second string: ")
+	fmt.Scanf("%s", &word2)
+
+	return word1, word2
+
+}
+
+func count_letters(word string) map[rune]int {
+	letter_count := make(map[rune]int)
+
+	for _, letter := range strings.ToLower(word) {
+		if _, ok := letter_count[letter]; ok {
+			letter_count[letter] += 1
 		} else {
-			counts_per_letter[key] = 1
+			letter_count[letter] = 1
 		}
-	}	
-	fmt.Println(counts_per_letter)
-	
-	
+	}
+	return letter_count 
 }
 
-//Unclear why this causes an error?
-//rune type?
-//Is it not possible to iterate through a word, get its unicode representation and store it into a map?
-//func count_letters() {
-
-//	word := "tonee"
-
-	//counts_per_letter := map[int] int{}
-
-//	for _, letter := range strings.ToLower(word) {
 	
-	// 	if _, ok := counts_per_letter[letter]; ok {
-	// 		counts_per_letter[letter] += 1
-	// 	}  else {
-        
-	// 		counts_per_letter[letter] = 1
-	// 	}
 
-	// }
-	// fmt.Println(counts_per_letter)
-// }
-// }
