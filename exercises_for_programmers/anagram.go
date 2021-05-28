@@ -29,11 +29,11 @@ func main() {
 
 	if anagram {
 		fmt.Println(word1 + " and " + word2+ " are anagrams.")
+	} else {
+		fmt.Println(word1 + " and " +  word2 + " are not anagrams."	)
 	}
-
 }
 
-//Can't I pass a map as a param? Is this the correct syntax?
 func is_anagram(map1 map[rune]int, map2 map[rune]int) bool {
 	return reflect.DeepEqual(map1, map2)
 }
@@ -48,7 +48,6 @@ func user_input() (string, string){
 	fmt.Scanf("%s", &word2)
 
 	return word1, word2
-
 }
 
 func count_letters(word string) map[rune]int {
@@ -63,6 +62,3 @@ func count_letters(word string) map[rune]int {
 	}
 	return letter_count 
 }
-
-	
-
