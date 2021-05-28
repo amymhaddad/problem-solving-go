@@ -12,6 +12,8 @@ Example Output
 
 package main
 
+import "fmt"
+
 func main() {
 
 	count_letters()
@@ -22,6 +24,16 @@ func count_letters() {
 	word := "tonee"
 	letters_to_bytes := []byte(word)
 	counts_per_letter := map[int] int{}
+
+	for _, letter := range letters_to_bytes {
+		key := int(letter)
+		if _, ok := counts_per_letter[key]; ok {
+			counts_per_letter[key] += 1
+		} else {
+			counts_per_letter[key] = 1
+		}
+	}	
+	fmt.Println(counts_per_letter)
 	
 	
 }
