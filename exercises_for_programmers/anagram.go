@@ -12,26 +12,31 @@ Example Output
 
 package main
 
-import (
-	"fmt"
-	"strings"
-)
-
 func main() {
 
 	count_letters()
 }
 
+
 func count_letters() {
+	word := "tonee"
+	letters_to_bytes := []byte(word)
+	counts_per_letter := map[int] int{}
+	
+	
+}
 
-	word := "tone"
+//Unclear why this causes an error?
+//rune type?
+//Is it not possible to iterate through a word, get its unicode representation and store it into a map?
+//func count_letters() {
 
-//	counts_per_letter := make(map[int] int)
+//	word := "tonee"
 
-	for _, letter := range strings.ToLower(word) {
-		///HERE: check of the letter is already in the map. If so, then add one to the count.
-		//Check what "_, letter" retursn -- buyt update _ to be a variable 
-		
+	//counts_per_letter := map[int] int{}
+
+//	for _, letter := range strings.ToLower(word) {
+	
 	// 	if _, ok := counts_per_letter[letter]; ok {
 	// 		counts_per_letter[letter] += 1
 	// 	}  else {
@@ -40,7 +45,6 @@ func count_letters() {
 	// 	}
 
 	// }
-	//fmt.Println(counts_per_letter)
-
-
-}
+	// fmt.Println(counts_per_letter)
+// }
+// }
