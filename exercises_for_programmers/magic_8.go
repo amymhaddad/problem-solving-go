@@ -20,10 +20,10 @@ func response() string {
 	//yields a constantly chagning number
 	rand.Seed(time.Now().UnixNano())
 
-	possible_answers := []string{"yes", "no", "maybe", "ask again later"}
+	possible_answers := []string{"yes", "no", "maybe", "ask again later"} // 0, 1, 2, 3
 
-	index := rand.Intn(len(possible_answers))
-	fmt.Println(rand.Intn(index))
+	index := rand.Intn(len(possible_answers))  // [0, 4)
+	fmt.Println(index)
 	
 	return possible_answers[index]
 

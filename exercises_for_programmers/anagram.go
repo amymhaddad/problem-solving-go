@@ -18,6 +18,8 @@ import (
 	"strings"
 )
 
+//put main on bottom
+//shorten var names
 func main() {
 	fmt.Println("Enter two strings and I'll tell you if they're anagrams.")
 	
@@ -27,10 +29,16 @@ func main() {
 
 	anagram := is_anagram(word1_letter_counter, word2_letter_counter)
 
+	//Printf -- i have to add a line break vs Println -- contains a line break
+	//Think of string formatting as Python {}
 	if anagram {
-		fmt.Println(word1 + " and " + word2+ " are anagrams.")
+		fmt.Printf("'%s' and '%s' are anagrams.\n", word1, word2)
+		fmt.Println(word1, word2)
+		fmt.Println("hello")
+
 	} else {
-		fmt.Println(word1 + " and " +  word2 + " are not anagrams."	)
+
+		fmt.Printf("'%s' and '%s' are not anagrams.\n", word1, word2)
 	}
 }
 
