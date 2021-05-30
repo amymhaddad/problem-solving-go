@@ -9,22 +9,23 @@ import "fmt"
 
 const known_password = "123abc"
 
-func main() {
-	fmt.Println(passwords())
-}
-
 func passwords() string {
-	var username, password string
+	var username, user_password string
 
 	fmt.Printf("Enter your username: ")
 	fmt.Scanf("%s/n", &username)
 
 	fmt.Printf("Enter your password: ")
-	fmt.Scanf("%s/n", &password)
+	fmt.Scanf("%s/n", &user_password)
 
-	if known_password == password {
+	if known_password == user_password {
 		return "Welcome"
 	} else {
 		return "I don't know you"
 	}
 }
+
+func main() {
+	fmt.Println(passwords())
+}
+

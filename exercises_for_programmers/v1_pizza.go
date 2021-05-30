@@ -15,11 +15,7 @@ import (
 	"strconv"
 )
 
-func main() {
-	fmt.Println(calculate_pizza_slices())
-}
-
-func calculate_pizza_slices() string{
+func calculate_pizza_slices() {
 	var total_people, total_slices_per_pizza, total_pizzas int
 	
 	fmt.Printf("How many people? ")
@@ -37,8 +33,11 @@ func calculate_pizza_slices() string{
 
 	total_slices := strconv.Itoa(slices_per_person)
 	total_leftovers := strconv.Itoa(leftovers)
-	
-	calculation := "Each person gets " + total_slices + " pieces of pizza. There are " + total_leftovers + " leftover pieces."
 
-	return calculation
+	fmt.Printf("Each person gets %s pieces of pizza.\n", total_slices)	
+	fmt.Printf("There are %s leftover pieces.", total_leftovers)
 }		
+
+func main() {
+	calculate_pizza_slices()
+}

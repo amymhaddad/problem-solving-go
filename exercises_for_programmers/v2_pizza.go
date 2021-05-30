@@ -15,13 +15,6 @@ import (
 	"strconv"
 )
 
-func main() {
-	slices_per_person, leftover_slices := calculate_pizza_slices()
-	pizza_distribution := "Each person gets " + slices_per_person + " total slices of pizza."
-	total_leftovers := " There are " + leftover_slices + " slices of pizza left over."
-	fmt.Println(pizza_distribution + total_leftovers)
-}
-
 func calculate_pizza_slices() (string, string){
 	var people, pizzas, slices_per_pizza int
 
@@ -39,4 +32,10 @@ func calculate_pizza_slices() (string, string){
 	leftover_slices := total_pizza_slices % people
 
 	return strconv.Itoa(slices_per_person), strconv.Itoa(leftover_slices)
+}
+
+func main() {
+	slices_per_person, leftover_slices := calculate_pizza_slices()
+	fmt.Printf("Each person gets %s total slices of pizza.\n", slices_per_person)
+	fmt.Printf("There are %s slices of pizza left over.", leftover_slices)
 }
