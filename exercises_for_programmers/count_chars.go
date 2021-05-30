@@ -9,6 +9,15 @@ package main
 
 import "fmt"
 
+func count_chars(word string) int{
+	total_chars := 0
+
+	for i := 0; i < len(word); i ++ {
+		total_chars += 1
+	}
+	return total_chars
+}
+
 func main() {
 	fmt.Println("Enter a word: ")
 	var word string
@@ -18,11 +27,3 @@ func main() {
 	fmt.Println(total_letters)
 }
 
-func count_chars(word string) int{
-	total_chars := 0
-
-	for i := 0; i < len(word); i ++ {
-		total_chars += 1
-	}
-	return total_chars
-}

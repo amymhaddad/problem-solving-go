@@ -18,30 +18,6 @@ import (
 	"strings"
 )
 
-//put main on bottom
-//shorten var names
-func main() {
-	fmt.Println("Enter two strings and I'll tell you if they're anagrams.")
-	
-	word1, word2 := user_input()
-	word1_letter_counter := count_letters(word1)
-	word2_letter_counter := count_letters(word2)
-
-	anagram := is_anagram(word1_letter_counter, word2_letter_counter)
-
-	//Printf -- i have to add a line break vs Println -- contains a line break
-	//Think of string formatting as Python {}
-	if anagram {
-		fmt.Printf("'%s' and '%s' are anagrams.\n", word1, word2)
-		fmt.Println(word1, word2)
-		fmt.Println("hello")
-
-	} else {
-
-		fmt.Printf("'%s' and '%s' are not anagrams.\n", word1, word2)
-	}
-}
-
 func is_anagram(map1 map[rune]int, map2 map[rune]int) bool {
 	return reflect.DeepEqual(map1, map2)
 }
@@ -70,3 +46,20 @@ func count_letters(word string) map[rune]int {
 	}
 	return letter_count 
 }
+
+func main() {
+	fmt.Println("Enter two strings and I'll tell you if they're anagrams.")
+	
+	word1, word2 := user_input()
+	word1_counts := count_letters(word1)
+	word2_counts := count_letters(word2)
+
+	anagram := is_anagram(word1_counts, word2_counts)
+
+	if anagram {
+		fmt.Printf("'%s' and '%s' are anagrams.\n", word1, word2)
+	} else {
+		fmt.Printf("'%s' and '%s' are not anagrams.\n", word1, word2)
+	}
+}
+
