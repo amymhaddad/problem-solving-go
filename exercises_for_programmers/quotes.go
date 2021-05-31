@@ -37,4 +37,3 @@ func main() {
 	quote, author := quote_and_author()
 	fmt.Printf("'%s' said: '%s'", author, quote)
 }
-
