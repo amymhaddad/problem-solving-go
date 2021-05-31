@@ -9,13 +9,25 @@ you're looking for."
 
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+) 
 
 func quote_and_author() (string, string) {
-	var quote, author string
-	fmt.Printf("Enter your quote: ")
-	fmt.Scanf("%s", &quote)
+	scanner := bufio.NewScanner(os.Stdin)
+	fmt.Print("Enter your quote: ")
 
+	scanner.Scan()
+
+	if scanner.Err() != nil {
+		fmt.Println("Error: ", scanner.Err())
+	}
+
+	quote := scanner.Text()
+
+	var author string
 	fmt.Printf("Enter the author of the quote: ")
 	fmt.Scanf("%s", &author)
 	return quote, author
@@ -23,6 +35,6 @@ func quote_and_author() (string, string) {
 
 func main() {
 	quote, author := quote_and_author()
-	fmt.Printf("'%s' said: '%s'\n", author, quote)
+	fmt.Printf("'%s' said: '%s'", author, quote)
 }
 
