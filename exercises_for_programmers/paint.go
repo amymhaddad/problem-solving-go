@@ -3,16 +3,16 @@ package main
 import (
 	"fmt"
 	"math"
+	"strconv"
 )
 
 const paint_gallon_coverage = 350
 
 func main() {
 	room_square_footage := room_size()
-	//fmt.Println(square_footage)
 	paint_cans := total_paint_cans(room_square_footage)
-	fmt.Println(paint_cans)
 	
+	fmt.Printf("You'll need to purchase %s cans of paint to cover %s square feet", strconv.Itoa(room_square_footage), paint_cans)
 }
 
 func room_size() int {
@@ -26,8 +26,8 @@ func room_size() int {
 	return length * width
 }
 
-func total_paint_cans(room_square_footage int) float64 {
-
+func total_paint_cans(room_square_footage int) string{
 	paint_gallons := float64(room_square_footage) / float64(paint_gallon_coverage)
-	return math.Ceil(paint_gallons)
+	total_paint_cans := math.Ceil(paint_gallons)
+	return strconv.FormatFloat(total_paint_cans, 'f', 0, 64)
 }
