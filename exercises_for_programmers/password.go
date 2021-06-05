@@ -72,24 +72,24 @@ func contains_numbers_letters_special_chars(password string) bool {
 	return contains_letters && contains_number && contains_special_characters
 }
 
-func weak_password(password string) string {
-	if contains_all_numbers(password) {
-		return "very weak"
-	} else if contains_all_letters(password) {
-		return "weak"
-	}
-}
-
-func strong_password(password string) string {
-	if contains_number_and_letters(password) {
-		return "strong"
-	} else if contains_numbers_letters_special_chars(password) {
-		return "very strong"
-	}
-}
-
 func password_strength(password string) string {
-	return "here"
+	switch {
+		case contains_all_numbers(password):
+			return "very weak"
+		case contains_all_letters(password):
+			return "weak"
+		case contains_number_and_letters(password):
+			return "strong"
+		case contains_numbers_letters_special_chars(password):
+			return "very strong"
+		default:
+			return "Invalid password"
+		}
+}
+
+
+//func password_strength(password string) string {
+
 	// if weak_password_length(password) {
 	// 	weak_result := weak_password(password)
 	// 	return weak_result
@@ -98,7 +98,7 @@ func password_strength(password string) string {
 	// 		return strong_result
 	//  } 
 
-}
+//}
 
 func main() {
 
