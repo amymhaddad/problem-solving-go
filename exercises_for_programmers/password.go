@@ -19,6 +19,8 @@ func normalize_password(password string) string {
 	return strings.ToLower(password)
 }
 
+
+
 func weak_password_length(password string) bool {
 	return len(password) < standard_password_length
 }
@@ -87,48 +89,8 @@ func password_strength(password string) string {
 		}
 }
 
-
-//func password_strength(password string) string {
-
-	// if weak_password_length(password) {
-	// 	weak_result := weak_password(password)
-	// 	return weak_result
-	// 	} else if strong_password_length(password) {
-	// 		strong_result := strong_password(password)
-	// 		return strong_result
-	//  } 
-
-//}
-
 func main() {
-
 	password := user_password()
-	
 	user_password_strength := password_strength(password)
-	fmt.Println(user_password_strength)
+	fmt.Printf("The password '%s' is a '%s' password.\n", password, user_password_strength)
 }
-
-
-
-// func contains_special_chars(password string) bool {
-// 	found, _ := regexp.MatchString("[^a-z0-9]", normalize_password(password))
-// 	return found
-// }
-
-
-// func contains_number_and_letters(password string) bool {
-// 	contains_letters, _ := regexp.MatchString("[a-z]", normalize_password(password))
-// 	contains_number, _ := regexp.MatchString("[0-9]+", password)
-// 	contains_special_characters := contains_special_chars(password)
-
-// 	if contains_special_characters {
-// 		return false
-// 	} else if contains_letters && contains_number {
-// 		return true
-// 	}
-// 	//Unclear why I need to have a return at the end for this function to run,
-// 	//given that my conditional above handles the return?
-// 	return false 
-// }
-
-
