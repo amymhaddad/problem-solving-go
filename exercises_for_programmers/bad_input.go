@@ -8,32 +8,31 @@ import (
 
 func main() {
 	rate := user_rate()
-	fmt.Println(rate)
+	fmt.Println(validate_user_rate(rate))
 
 }
 
-func user_rate() int {
-//make htis a func	
+func user_rate() string {
+
 	var rate string
-	//fmt.Printf("Enter a rate: ")
-	//fmt.Scanf("%s", &rate)
+	fmt.Printf("Enter a rate: ")
+	fmt.Scanf("%s", &rate)
+	return rate
+}
 
-
+func validate_user_rate(rate string) int {
 	for {
-
-		fmt.Printf("Enter a rate: ")
-		fmt.Scanf("%s", &rate)
-
 		valid_rate, _ := regexp.MatchString("[1-9]+", rate)
+		fmt.Println("valid", valid_rate)
 		if !valid_rate{
-			fmt.Printf("Enter a rate: ")
-			fmt.Scanf("%s", &rate)
+			fmt.Printf("Sorry. '%s' is an invalid rate. Try again.\n", rate)
+			rate = user_rate()
+			fmt.Println(rate)
 			continue
 		} else {
 			user_rate, _ := strconv.Atoi(rate)
 			return calculate_investment_return(user_rate)
 		}
-
 	}
 }
 
