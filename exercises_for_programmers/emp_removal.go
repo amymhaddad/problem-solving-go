@@ -6,36 +6,42 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
-	"time"
 )
 
 func main() {
 	employees := []string{"John Smith", "Jackie Jackson", "Chris Jones", "Amanda Cullen", "Jeremy Goodwin"}
-	//display_employees(employees)
+	fmt.Printf("There are %d employees:\n", len(employees))
+	fmt.Println()
 
-	employee_name := remove_employee(employees)
-	fmt.Println(employee_name)
-}
+	display_employees(employees)
+	fmt.Println()
+
+	var first, last string
+	fmt.Printf("Enter an employee to remove: ")
+	fmt.Scanf("%s %s\n", &first, &last)
+	//create first and last into a single string and pass the single string into
+	//function
+	fmt.Println(first, last)
+
+// 	remaining_employees := remove_employee(&employees, employee_name)
+//
+// 	fmt.Printf("There are %d remaining employees:\n", len(remaining_employees))
+// 	display_employees(remaining_employees)
+ }
 
 func display_employees(employees []string) {
-	
-	fmt.Printf("There are %d employees:\n", len(employees))
-
 	for _, name := range employees {
 		fmt.Println(name)
-	}
-
-	//unclear why this indexing doesn't work 
-	// for i:=0; i<len(*employees); i++{
-	// 	fmt.Println(employees[i])
-	// }	
+	}	
 }
 
-func remove_employee(employees []string) string {
-	rand.Seed(time.Now().UnixNano())
-	index := rand.Intn(len(employees)-1)
-	return employees[index]
 
-
+func remove_employee(employees *[]string, employee_name string) []string {
+	for i, name := range *employees {
+		if name == employee_name {
+			fmt.Println("HERE", name, i)
+			*employees = append((*employees)[:i], (*employees)[i+1:]...)
+		}
+	}
+	return *employees
 }
