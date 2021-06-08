@@ -11,7 +11,6 @@ import (
 )
 
 func contestants() []string {
-
 	names := []string{}
 	for {
 		var name string
@@ -32,7 +31,6 @@ func select_winner(contestants []string) string {
 }
 
 func remove_winner(contestant_names *[]string, winner string) []string {
-
 	for i, name := range *contestant_names {
 		if name == winner {
 			*contestant_names = append((*contestant_names)[:i], (*contestant_names)[i+1:]...)
