@@ -8,6 +8,22 @@ import (
 	"fmt"
 )
 
+
+func display_employees(employees []string) {
+	for _, name := range employees {
+		fmt.Println(name)
+	}	
+}
+
+func remove_employee(employees *[]string, employee_name string) []string {
+	for i, name := range *employees {
+		if name == employee_name {
+			*employees = append((*employees)[:i], (*employees)[i+1:]...)
+		}
+	}
+	return *employees
+}
+
 func main() {
 	employees := []string{"John Smith", "Jackie Jackson", "Chris Jones", "Amanda Cullen", "Jeremy Goodwin"}
 	fmt.Printf("There are %d employees:\n", len(employees))
@@ -19,29 +35,9 @@ func main() {
 	var first, last string
 	fmt.Printf("Enter an employee to remove: ")
 	fmt.Scanf("%s %s\n", &first, &last)
-	//create first and last into a single string and pass the single string into
-	//function
-	fmt.Println(first, last)
 
-// 	remaining_employees := remove_employee(&employees, employee_name)
-//
-// 	fmt.Printf("There are %d remaining employees:\n", len(remaining_employees))
-// 	display_employees(remaining_employees)
+	employee_name := first +" " + last
+	remaining_employees := remove_employee(&employees, employee_name)
+	fmt.Printf("There are %d remaining employees:\n", len(remaining_employees))
+	display_employees(remaining_employees)
  }
-
-func display_employees(employees []string) {
-	for _, name := range employees {
-		fmt.Println(name)
-	}	
-}
-
-
-func remove_employee(employees *[]string, employee_name string) []string {
-	for i, name := range *employees {
-		if name == employee_name {
-			fmt.Println("HERE", name, i)
-			*employees = append((*employees)[:i], (*employees)[i+1:]...)
-		}
-	}
-	return *employees
-}
