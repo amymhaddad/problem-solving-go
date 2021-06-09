@@ -6,7 +6,9 @@ package main
 
 import (
 	"fmt"
-	//"math/rand"
+	"math/rand"
+	"strings"
+	"time"
 )
 
 
@@ -18,7 +20,9 @@ var special_chars = [9]string{"!", "@", "#", "$", "%", "^", "&", "*", "("}
 
 func main() {
 	pw_length, total_special_chars, total_nums, total_letters := user_pw_specs()
-	fmt.Println(pw_length, total_special_chars, total_nums, total_letters)
+//	fmt.Println(pw_length, total_special_chars, total_nums, total_letters)
+	password := generate_pw(pw_length, total_special_chars, total_nums, total_letters)
+	fmt.Println(password)
 }
 
 
@@ -37,4 +41,29 @@ func user_pw_specs() (int, int, int, int) {
 	total_letters := pw_length - (total_special_chars + total_nums)
 
 	return pw_length, total_special_chars, total_nums, total_letters
+}
+
+func generate_pw(pw_length int, total_special_chars int, total_nums int, total_letters int) string {
+	password := make([] string, pw_length)
+
+	for len(password) < pw_length {
+		password = append(password, generate_random_chars(special_chars, total_special_chars))
+		// generate_random_chars(numbers, total_nums)
+		// generate_random_chars(letters, total_letters)
+	}	
+	fmt.Println("here", password)
+	return strings.Join(password, " ")
+}
+
+func generate_random_chars(chars [9]string, total_chars int) (string) {
+	var password string
+	rand.Seed(time.Now().UnixNano())
+	index := rand.Intn(total_chars)
+
+	for total_chars > 0 {
+		new_char := chars[index]
+		total_chars -= 1
+		password += new_char
+	}	
+	return password
 }
