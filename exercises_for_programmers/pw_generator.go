@@ -7,6 +7,7 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"strings"
 	"time"
 )
 
@@ -24,6 +25,9 @@ type password struct {
 
 
 func user_pw_specs() *password {
+	//I'm creating an instance of the struct, password.
+	//bc I create an instance of the struct here, I return the address of the
+	//struct via &user_pw
 	var user_pw password
 	
 	var pw_length, total_special_chars, total_nums int
@@ -45,23 +49,21 @@ func user_pw_specs() *password {
 	return &user_pw
 }
 
-//This syantx w/pointer is 
-func generate_pw(user_password *password)  {
-	fmt.Println("HERE", user_password)
-	//instead of string, use byte array. Then I don't have to append -- it's
-	//more efficient
 
-	//use var when setting to zero value
-	// password := []string{}
+func generate_pw(user_password *password) string {
+	var new_password []string
 
-	// for len(password) <= pw_length {
-	// 	password = append(password, generate_random_chars(special_chars, total_special_chars))
-	// 	password = append(password, generate_random_chars(numbers, total_nums))
-	// 	password = append(password, generate_random_chars(letters, total_letters))
-	// }	
-	// fmt.Println("New pw: ", password)
-	
-	// return strings.Join(password, "")
+	for len(new_password) <= user_password.length{
+		new_password = append(new_password, generate_random_chars(special_chars, user_password.total_special_chars))
+		new_password = append(new_password, generate_random_chars(numbers, user_password.total_nums))
+		if user_password.total_letters == 0 {
+			break 
+			// return fmt.Errorf("must be greater")
+		} else {
+			new_password = append(new_password, generate_random_chars(letters, user_password.total_letters))
+		}
+	 }	
+	return strings.Join(new_password, "")
 }
 
 func generate_random_chars(chars [9]string, total_chars int) (string) {
@@ -74,12 +76,13 @@ func generate_random_chars(chars [9]string, total_chars int) (string) {
 		total_chars -= 1
 		password += new_char
 	}	
-	//fmt.Println("generate: ", password)
 	return password
 }
 
 func main() {
-	user_password := user_pw_specs()
-	generate_pw(user_password)
+	// var password_criteria password
+	// user_pw_specs(&password_criteria)
+	password_criteria := user_pw_specs()
+	user_password, err := generate_pw(password_criteria)
+	fmt.Printf("The password is %s", user_password)
 }
-
