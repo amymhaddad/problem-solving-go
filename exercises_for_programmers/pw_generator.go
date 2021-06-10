@@ -7,7 +7,6 @@ package main
 import (
 	"fmt"
 	"math/rand"
-	"strings"
 	"time"
 )
 
@@ -16,18 +15,18 @@ var letters = [9]string{"a", "b", "c", "d", "e", "f", "g", "h", "i"}
 var numbers = [9]string{"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 var special_chars = [9]string{"!", "@", "#", "$", "%", "^", "&", "*", "("}
 
-
-//define the struct
-func main() {
-	pw_length, total_special_chars, total_nums, total_letters := user_pw_specs()
-	generate_pw(pw_length, total_special_chars, total_nums, total_letters)
+type password struct {
+	length int
+	total_special_chars int
+	total_nums int
+	total_letters int
 }
 
 
-func user_pw_specs() (int, int, int, int) {
-	//add to the struct	
-	var pw_length, total_special_chars, total_nums int 
-
+func user_pw_specs() *password {
+	var user_pw password
+	
+	var pw_length, total_special_chars, total_nums int
 	fmt.Printf("Enter the minimum password length: ")
 	fmt.Scanf("%d", &pw_length)
 
@@ -38,27 +37,31 @@ func user_pw_specs() (int, int, int, int) {
 	fmt.Scanf("%d", &total_nums)
 
 	total_letters := pw_length - (total_special_chars + total_nums)
-	//return a struct that contains each field 
-	return pw_length, total_special_chars, total_nums, total_letters
+
+	user_pw.length = pw_length
+	user_pw.total_special_chars = total_special_chars
+	user_pw.total_nums = total_nums 
+	user_pw.total_letters = total_letters
+	return &user_pw
 }
 
-//take a struct
-//researach when to use byte array
-func generate_pw(pw_length int, total_special_chars int, total_nums int, total_letters int) string {
+//This syantx w/pointer is 
+func generate_pw(user_password *password)  {
+	fmt.Println("HERE", user_password)
 	//instead of string, use byte array. Then I don't have to append -- it's
 	//more efficient
 
 	//use var when setting to zero value
-	password := []string{}
+	// password := []string{}
 
-	for len(password) <= pw_length {
-		password = append(password, generate_random_chars(special_chars, total_special_chars))
-		password = append(password, generate_random_chars(numbers, total_nums))
-		password = append(password, generate_random_chars(letters, total_letters))
-	}	
-	fmt.Println("New pw: ", password)
+	// for len(password) <= pw_length {
+	// 	password = append(password, generate_random_chars(special_chars, total_special_chars))
+	// 	password = append(password, generate_random_chars(numbers, total_nums))
+	// 	password = append(password, generate_random_chars(letters, total_letters))
+	// }	
+	// fmt.Println("New pw: ", password)
 	
-	return strings.Join(password, "")
+	// return strings.Join(password, "")
 }
 
 func generate_random_chars(chars [9]string, total_chars int) (string) {
@@ -74,3 +77,9 @@ func generate_random_chars(chars [9]string, total_chars int) (string) {
 	//fmt.Println("generate: ", password)
 	return password
 }
+
+func main() {
+	user_password := user_pw_specs()
+	generate_pw(user_password)
+}
+
