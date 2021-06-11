@@ -23,26 +23,7 @@ func user_input() string {
 	return user_numbers
 }
 
-// func quote_and_author() (string, string) {
-// 	scanner := bufio.NewScanner(os.Stdin)
-// 	fmt.Print("Enter your quote: ")
-  
-// 	scanner.Scan()
-  
-// 	if scanner.Err() != nil {
-// 		fmt.Println("Error: ", scanner.Err())
-// 	}
-  
-// 	quote := scanner.Text()
-  
-// 	var author string
-// 	fmt.Printf("Enter the author of the quote: ")
-// 	fmt.Scanf("%s", &author)
-// 	return quote, author
-//  }
- 
-
-func generate_number_range(user_numbers string)  {
+func generate_number_range(user_numbers string)  []int {
 	user_nums := strings.Split(user_numbers, " ")
 	even_nums := [] int{}
 
@@ -52,16 +33,16 @@ func generate_number_range(user_numbers string)  {
 			even_nums = append(even_nums, digit)
 		}
 	}
-	fmt.Println(even_nums)
+	return even_nums
 }
-
 
 func main() {
-	fmt.Println(user_input())
+	user_numbers := user_input()
+	fmt.Println("The user entered: %s", user_numbers)
 
-	// user_numbers := user_input()
-	// fmt.Println(user_numbers)
-	// number_range := generate_number_range(user_numbers)
-	// fmt.Println(user_numbers)
+	number_range := generate_number_range(user_numbers)
+	fmt.Println("The even numbers are: ")
+	for _, num := range number_range {
+		fmt.Println(num)
+	}
 }
-
