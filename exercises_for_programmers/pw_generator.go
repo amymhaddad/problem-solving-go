@@ -5,13 +5,11 @@ Create a program that generates a secure password. Prompt the user for the minim
 package main
 
 import (
-	"errors"
 	"fmt"
 	"math/rand"
 	"strings"
 	"time"
 )
-
 
 var letters = [9]string{"a", "b", "c", "d", "e", "f", "g", "h", "i"}
 var numbers = [9]string{"1", "2", "3", "4", "5", "6", "7", "8", "9"}
@@ -19,40 +17,39 @@ var special_chars = [9]string{"!", "@", "#", "$", "%", "^", "&", "*", "("}
 
 type password struct {
 	length int
-	total_special_chars int
-	total_nums int
-	total_letters int
+	totalSpecialChars int
+	totalNums int
+	totalLetters int
 }
 
-
-func user_pw_specs() (*password, error) {
+func userPasswordSpecs() (*password, error) {
 	//I'm creating an instance of the struct, password.
 	//bc I create an instance of the struct here, I return the address of the
 	//struct via &user_pw
-	var user_pw password
+	var userPassword password
 	
-	var pw_length, total_special_chars, total_nums int
+	var pwLength, totalSpecialChars, totalNums int
 	fmt.Printf("Enter the minimum password length: ")
-	fmt.Scanf("%d", &pw_length)
+	fmt.Scanf("%d", &pwLength)
 
 	fmt.Printf("Enter the total special characters: ")
-	fmt.Scanf("%d", &total_special_chars)
+	fmt.Scanf("%d", &totalSpecialChars)
 
 	fmt.Printf("Enter the total numbers: ")
-	fmt.Scanf("%d", &total_nums)
+	fmt.Scanf("%d", &totalNums)
 
 	//Added error handling
-	if total_special_chars < 0 || total_nums < 0 {
-		return &user_pw, errors.New("Invalid number entry.")
+	if totalSpecialChars < 0 || totalNums < 0 {
+		return &userPassword, fmt.Errorf("Invalid number entry.")
 	}
 
-	total_letters := pw_length - (total_special_chars + total_nums)
+	totalLetters := pwLength - (totalSpecialChars + totalNums)
 
-	user_pw.length = pw_length
-	user_pw.total_special_chars = total_special_chars
-	user_pw.total_nums = total_nums 
-	user_pw.total_letters = total_letters
-	return &user_pw, nil 
+	userPassword.length = pwLength
+	userPassword.totalSpecialChars = totalSpecialChars
+	userPassword.totalNums = totalNums 
+	userPassword.totalLetters = totalLetters
+	return &userPassword, nil 
 }
 
 //This function takes the struct, user_password
@@ -61,17 +58,17 @@ func user_pw_specs() (*password, error) {
 //w/user_password
 func generate_pw(user_password *password) string {
 	var new_password []string
+	
+	//Use < NOT <= bc all of the function calls run on each iteration. This will cause the program to run 1 too many times
+	for len(new_password) <= user_password.length {
+		new_password = append(new_password, generate_random_chars(special_chars, user_password.totalSpecialChars))
+		new_password = append(new_password, generate_random_chars(numbers, user_password.totalNums))
 
-	for len(new_password) <= user_password.length{
-		new_password = append(new_password, generate_random_chars(special_chars, user_password.total_special_chars))
-		new_password = append(new_password, generate_random_chars(numbers, user_password.total_nums))
-		new_password = append(new_password, generate_random_chars(letters, user_password.total_letters))
-		// if user_password.total_letters == 0 {
-		// 	break 
-		// 	// return fmt.Errorf("must be greater")
-		// } else {
-		// 	new_password = append(new_password, generate_random_chars(letters, user_password.total_letters))
-		// }
+		if user_password.totalLetters == 0 {
+			break 
+		} else {
+			new_password = append(new_password, generate_random_chars(letters, user_password.totalLetters))
+		}
 	 }	
 	return strings.Join(new_password, "")
 }
@@ -79,37 +76,29 @@ func generate_pw(user_password *password) string {
 func generate_random_chars(chars [9]string, total_chars int) (string) {
 	var password string
 	rand.Seed(time.Now().UnixNano())
-	
 	index := rand.Intn(total_chars)
 
 	for total_chars > 0 {
 		new_char := chars[index]
-		total_chars -= 1
+		
+		total_chars--
 		password += new_char
 	}	
 	return password
 }
-
+//IF need to exit immediately: os.exit()
 func main() {	
-	//Unclear why my "else" doesn't work. Then the updated value should be passed to the generate_pw function?
-	//Unless I need to wrap this into a for loop 
-	password_criteria, err := user_pw_specs()
+	var password_criteria *password
+	var err error
 
-	if err != nil {
+	for {
+		password_criteria, err = userPasswordSpecs()
+		if err == nil {
+			break
+		}
 		fmt.Println(err, "Please try again.")
-		user_pw_specs()
-	} else {
-		user_password := generate_pw(password_criteria)
-	 	fmt.Printf("The password is %s", user_password)
 	}
 
-
-
-	// if password_criteria, err := user_pw_specs(); err != nil {
-	// 	fmt.Println(err, "Please try again.")
-	// 	user_pw_specs()
-	// } else {
-	// 	user_password := generate_pw(password_criteria)
-	//  	fmt.Printf("The password is %s", user_password)
-	// }
+	user_password := generate_pw(password_criteria)
+	fmt.Printf("The password is %s\n", user_password)
 }
