@@ -23,9 +23,6 @@ type password struct {
 }
 
 func userPasswordSpecs() (*password, error) {
-	//I'm creating an instance of the struct, password.
-	//bc I create an instance of the struct here, I return the address of the
-	//struct via &user_pw
 	var userPassword password
 	
 	var pwLength, totalSpecialChars, totalNums int
@@ -38,7 +35,6 @@ func userPasswordSpecs() (*password, error) {
 	fmt.Printf("Enter the total numbers: ")
 	fmt.Scanf("%d", &totalNums)
 
-	//Added error handling
 	if totalSpecialChars < 0 || totalNums < 0 {
 		return &userPassword, fmt.Errorf("Invalid number entry.")
 	}
@@ -52,14 +48,9 @@ func userPasswordSpecs() (*password, error) {
 	return &userPassword, nil 
 }
 
-//This function takes the struct, user_password
-//Use the * to indicate that I'm passing by reference. 
-//That's bc I want to reference the data stored in memory associated
-//w/user_password
 func generate_pw(user_password *password) string {
 	var new_password []string
 	
-	//Use < NOT <= bc all of the function calls run on each iteration. This will cause the program to run 1 too many times
 	for len(new_password) <= user_password.length {
 		new_password = append(new_password, generate_random_chars(special_chars, user_password.totalSpecialChars))
 		new_password = append(new_password, generate_random_chars(numbers, user_password.totalNums))
@@ -86,7 +77,7 @@ func generate_random_chars(chars [9]string, total_chars int) (string) {
 	}	
 	return password
 }
-//IF need to exit immediately: os.exit()
+
 func main() {	
 	var password_criteria *password
 	var err error
