@@ -6,16 +6,19 @@ import (
 	"strings"
 )
 
-const standard_password_length int = 8
+const standard_password_length = 8
 
 func user_password() string {
 	var password string
+
 	fmt.Printf("Enter your password: ")
 	fmt.Scanf("%s", &password)
+
 	return password
 }
 
 func normalize_password(password string) string {
+
 	return strings.ToLower(password)
 }
 
@@ -25,6 +28,7 @@ func password_length(password string) string {
 	if length < standard_password_length {
 		return "short password length"
 	} else {
+
 		return "standard password length"
 	}
 }
@@ -32,12 +36,14 @@ func password_length(password string) string {
 func very_weak_password(password string) bool {
 	short_length := password_length(password) == "short password length"
 	contains_all_numbers, _ := regexp.MatchString("(^[0-9]+$)", password)
+
 	return short_length && contains_all_numbers
 }
 
 func weak_password(password string) bool {
 	short_length := password_length(password) == "short password length"
 	contains_all_letters, _ := regexp.MatchString("([a-z]+)", normalize_password(password))
+	
 	return short_length && contains_all_letters
 }
 
