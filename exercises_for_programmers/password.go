@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"regexp"
-	"strings"
 )
 
 const standard_password_length = 8
@@ -17,63 +16,66 @@ func user_password() string {
 	return password
 }
 
-func very_weak_password(password string, minimum_pw_length bool) bool {
-	//short_length := password_length(password) == "short password length"
+func very_weak_password(password string) bool {
 	contains_all_numbers, _ := regexp.MatchString("(^[0-9]+$)", password)
 
-	return minimum_pw_length && contains_all_numbers
+	return contains_all_numbers
 }
 
-func weak_password(password string, minimum_pw_length bool) bool {
-	//short_length := password_length(password) == "short password length"
-	contains_all_letters, _ := regexp.MatchString("([a-z]+)", password)
-	contains_special_characters, _ := regexp.MatchString("[^a-z0-9]", password)
+func weak_password(password string) bool {
+	contains_all_letters, _ := regexp.MatchString("([a-zA-Z]+)", password)
+	contains_special_characters, _ := regexp.MatchString("[^a-zA-Z0-9]", password)
 	contains_number, _ := regexp.MatchString("[0-9]+", password)
 	
-	return minimum_pw_length && contains_all_letters && !contains_special_characters && !contains_number
+	return contains_all_letters && !contains_special_characters && !contains_number
 }
 
-func strong_password(password string, minimum_pw_length bool) bool {
-//standard_length := password_length(password) == "standard password length"
-	contains_letters, _ := regexp.MatchString("[a-z]", password)
+func strong_password(password string) bool {
+	contains_letters, _ := regexp.MatchString("[a-zA-Z]", password)
 	contains_number, _ := regexp.MatchString("[0-9]+", password)
-	contains_special_characters, _ := regexp.MatchString("[^a-z0-9]", password)
+	contains_special_characters, _ := regexp.MatchString("[^a-zA-Z0-9]", password)
 
-	return minimum_pw_length && contains_letters && contains_number && !contains_special_characters
+	return contains_letters && contains_number && !contains_special_characters
 }
 
-func very_strong_password(password string, minimum_pw_length bool) bool {
-//	standard_length := password_length(password) == "standard password length"
-
-	contains_letters, _ := regexp.MatchString("[a-z]", password)
+func very_strong_password(password string) bool {
+	contains_letters, _ := regexp.MatchString("[a-zA-Z]", password)
 	contains_number, _ := regexp.MatchString("[0-9]+", password)
-	contains_special_characters, _ := regexp.MatchString("[^a-z0-9]", password)
+	contains_special_characters, _ := regexp.MatchString("[^a-zA-Z0-9]", password)
 
-	return minimum_pw_length && contains_letters && contains_number && contains_special_characters
+	return contains_letters && contains_number && contains_special_characters
 }
 
-func password_strength(password string, minimum_pw_length bool) string {
-	fmt.Println("PW: ", password, minimum_pw_length)
-	switch {
-		case very_weak_password(password, minimum_pw_length):
-			return "very weak"
-		case weak_password(password, minimum_pw_length):
-			return "weak"
-		case strong_password(password, minimum_pw_length):
+func password_strength(password string) string {
+//can delete pw_legnth 
+
+	if len(password) >= standard_password_length {
+		if strong_password(password){
 			return "strong"
-		case very_strong_password(password, minimum_pw_length):
+		} else if very_strong_password(password) {
 			return "very strong"
-		default:
-			return "Invalid password"
-			}
+		} 
+		return "Invalid password"
+	}
+	
+	if len(password) < standard_password_length {
+		if very_weak_password(password) {
+			return "very weak"
+		} else if weak_password(password) {
+			return "weak"
+		}
+		return "Invalid password"
+	}
+	
+	return "Invalid Password"
+	
 }
+
+
 
 func main() {
 	password := user_password()
-	normalized_password := strings.ToLower(password)
-	minimum_pw_length := len(normalized_password) >= standard_password_length
-	//fmt.Println("Min pw length: ", len(normalized_password))
 
-	user_password_strength := password_strength(normalized_password, minimum_pw_length)
+	user_password_strength := password_strength(password)
 	fmt.Printf("The password '%s' is a '%s' password.\n", password, user_password_strength)
 }
