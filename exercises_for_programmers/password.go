@@ -7,7 +7,7 @@ import (
 
 const standard_password_length = 8
 
-func user_password() string {
+func userPassword() string {
 	var password string
 
 	fmt.Printf("Enter your password: ")
@@ -16,66 +16,66 @@ func user_password() string {
 	return password
 }
 
-func very_weak_password(password string) bool {
-	contains_all_numbers, _ := regexp.MatchString("(^[0-9]+$)", password)
+func veryWeakPassword(password string) bool {
+	containsAllNumbers, _ := regexp.MatchString("(^[0-9]+$)", password)
 
-	return contains_all_numbers
+	return containsAllNumbers
 }
 
-func weak_password(password string) bool {
-	contains_all_letters, _ := regexp.MatchString("([a-zA-Z]+)", password)
-	contains_special_characters, _ := regexp.MatchString("[^a-zA-Z0-9]", password)
-	contains_number, _ := regexp.MatchString("[0-9]+", password)
+func weakPassword(password string) bool {
+	containsAllLetters, _ := regexp.MatchString("([a-zA-Z]+)", password)
+	containsSpecialChars, _ := regexp.MatchString("[^a-zA-Z0-9]", password)
+	containsNumber, _ := regexp.MatchString("[0-9]+", password)
 	
-	return contains_all_letters && !contains_special_characters && !contains_number
+	return containsAllLetters && !containsSpecialChars && !containsNumber
 }
 
-func strong_password(password string) bool {
-	contains_letters, _ := regexp.MatchString("[a-zA-Z]", password)
-	contains_number, _ := regexp.MatchString("[0-9]+", password)
-	contains_special_characters, _ := regexp.MatchString("[^a-zA-Z0-9]", password)
+func strongPassword(password string) bool {
+	containsLetters, _ := regexp.MatchString("[a-zA-Z]", password)
+	containsNumber, _ := regexp.MatchString("[0-9]+", password)
+	containsSpecialChars, _ := regexp.MatchString("[^a-zA-Z0-9]", password)
 
-	return contains_letters && contains_number && !contains_special_characters
+	return containsLetters && containsNumber && !containsSpecialChars
 }
 
-func very_strong_password(password string) bool {
-	contains_letters, _ := regexp.MatchString("[a-zA-Z]", password)
-	contains_number, _ := regexp.MatchString("[0-9]+", password)
-	contains_special_characters, _ := regexp.MatchString("[^a-zA-Z0-9]", password)
+func veryStrongPassword(password string) bool {
+	containsLetters, _ := regexp.MatchString("[a-zA-Z]", password)
+	containsNumber, _ := regexp.MatchString("[0-9]+", password)
+	containsSpecialChars, _ := regexp.MatchString("[^a-zA-Z0-9]", password)
 
-	return contains_letters && contains_number && contains_special_characters
+	return containsLetters && containsNumber && containsSpecialChars
 }
 
-func password_strength(password string) string {
-//can delete pw_legnth 
-
+func passwordStrength(password string) string {
 	if len(password) >= standard_password_length {
-		if strong_password(password){
+		if strongPassword(password){
+
 			return "strong"
-		} else if very_strong_password(password) {
+
+		} else if veryStrongPassword(password) {
+
 			return "very strong"
 		} 
-		return "Invalid password"
 	}
 	
 	if len(password) < standard_password_length {
-		if very_weak_password(password) {
+		if veryWeakPassword(password) {
+
 			return "very weak"
-		} else if weak_password(password) {
+
+		} else if weakPassword(password) {
+
 			return "weak"
 		}
-		return "Invalid password"
 	}
 	
 	return "Invalid Password"
 	
 }
 
-
-
 func main() {
-	password := user_password()
+	password := userPassword()
+	userPasswordStrength := passwordStrength(password)
 
-	user_password_strength := password_strength(password)
-	fmt.Printf("The password '%s' is a '%s' password.\n", password, user_password_strength)
+	fmt.Printf("The password '%s' is a '%s' password.\n", password, userPasswordStrength)
 }
