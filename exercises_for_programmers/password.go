@@ -5,7 +5,13 @@ import (
 	"regexp"
 )
 
-const standardPasswordLength = 8
+const (
+	standardPasswordLength = 8
+)
+
+var containsNumbers = regexp.MustCompile("([0-9]+)")
+var containsLetters = regexp.MustCompile("([a-zA-Z]+)")
+var containsSpecialChars = regexp.MustCompile("[^a-zA-Z0-9]")
 
 func userPassword() string {
 	var password string
@@ -17,33 +23,24 @@ func userPassword() string {
 }
 
 func veryWeakPassword(password string) bool {
-	containsAllNumbers, _ := regexp.MatchString("(^[0-9]+$)", password)
-
-	return containsAllNumbers
+	return containsNumbers.MatchString(password)
 }
 
 func weakPassword(password string) bool {
-	containsAllLetters, _ := regexp.MatchString("([a-zA-Z]+)", password)
-	containsSpecialChars, _ := regexp.MatchString("[^a-zA-Z0-9]", password)
-	containsNumber, _ := regexp.MatchString("[0-9]+", password)
-	
-	return containsAllLetters && !containsSpecialChars && !containsNumber
+	return containsLetters.MatchString(password)
 }
 
 func strongPassword(password string) bool {
-	containsLetters, _ := regexp.MatchString("[a-zA-Z]", password)
-	containsNumber, _ := regexp.MatchString("[0-9]+", password)
-	containsSpecialChars, _ := regexp.MatchString("[^a-zA-Z0-9]", password)
+	containsLettersNums := containsLetters.MatchString(password) && containsNumbers.MatchString(password)
+	specialChars := containsSpecialChars.MatchString(password)
 
-	return containsLetters && containsNumber && !containsSpecialChars
+	return containsLettersNums && !specialChars
 }
 
 func veryStrongPassword(password string) bool {
-	containsLetters, _ := regexp.MatchString("[a-zA-Z]", password)
-	containsNumber, _ := regexp.MatchString("[0-9]+", password)
-	containsSpecialChars, _ := regexp.MatchString("[^a-zA-Z0-9]", password)
+	containsLettersNumsSpecChars := containsLetters.MatchString(password) && containsNumbers.MatchString(password) && containsSpecialChars.MatchString(password)
 
-	return containsLetters && containsNumber && containsSpecialChars
+	return containsLettersNumsSpecChars
 }
 
 func passwordStrength(password string) string {
@@ -51,16 +48,16 @@ func passwordStrength(password string) string {
 	strongPasswordLength := len(password) >= standardPasswordLength
 
 	switch {
-		case strongPasswordLength && strongPassword(password):
-			return "strong"
-		case strongPasswordLength && veryStrongPassword(password):
-			return "very strong"
-		case weakPasswordLength && weakPassword(password):
-			return "weak"
-		case weakPasswordLength && veryWeakPassword(password):
-			return "very weak"
-		default:
-			return "Invalid password"
+	case strongPasswordLength && strongPassword(password):
+		return "strong"
+	case strongPasswordLength && veryStrongPassword(password):
+		return "very strong"
+	case weakPasswordLength && weakPassword(password):
+		return "weak"
+	case weakPasswordLength && veryWeakPassword(password):
+		return "very weak"
+	default:
+		return "Invalid password"
 	}
 }
 
