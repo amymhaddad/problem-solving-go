@@ -5,7 +5,7 @@ import (
 	"regexp"
 )
 
-const standard_password_length = 8
+const standardPasswordLength = 8
 
 func userPassword() string {
 	var password string
@@ -47,30 +47,21 @@ func veryStrongPassword(password string) bool {
 }
 
 func passwordStrength(password string) string {
-	if len(password) >= standard_password_length {
-		if strongPassword(password){
+	weakPasswordLength := len(password) < standardPasswordLength
+	strongPasswordLength := len(password) >= standardPasswordLength
 
+	switch {
+		case strongPasswordLength && strongPassword(password):
 			return "strong"
-
-		} else if veryStrongPassword(password) {
-
+		case strongPasswordLength && veryStrongPassword(password):
 			return "very strong"
-		} 
-	}
-	
-	if len(password) < standard_password_length {
-		if veryWeakPassword(password) {
-
-			return "very weak"
-
-		} else if weakPassword(password) {
-
+		case weakPasswordLength && weakPassword(password):
 			return "weak"
-		}
+		case weakPasswordLength && veryWeakPassword(password):
+			return "very weak"
+		default:
+			return "Invalid password"
 	}
-	
-	return "Invalid Password"
-	
 }
 
 func main() {
