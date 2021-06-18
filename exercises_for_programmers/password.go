@@ -5,9 +5,7 @@ import (
 	"regexp"
 )
 
-const (
-	standardPasswordLength = 8
-)
+const standardPasswordLength = 8
 
 var containsNumbers = regexp.MustCompile("([0-9]+)")
 var containsLetters = regexp.MustCompile("([a-zA-Z]+)")
