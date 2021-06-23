@@ -8,7 +8,6 @@ What is the rate of return? 4
 It will take 18 years to double your initial investment.
 */
 
-
 package main
 
 import (
@@ -29,23 +28,25 @@ func validateUserRate(rate string) int {
 	for {
 		validRate, _ := regexp.MatchString("[1-9]+", rate)
 		if !validRate {
- 			fmt.Printf("Sorry. '%s' is an invalid rate. Try again.\n", rate)
+			fmt.Printf("Sorry. '%s' is an invalid rate. Try again.\n", rate)
 			rate = getUserRate()
 			fmt.Println(rate)
-			continue
 		} else {
 			userInvestmentRate, _ := strconv.Atoi(rate)
-			return calcInvestmentReturn(userInvestmentRate)
+			return userInvestmentRate
 		}
 	}
 }
 
-func calcInvestmentReturn(getUserRate int) int {
-	return 72 / getUserRate
-}	
+func calcInvestmentReturn(validRate int) int {
+
+	return 72 / validRate
+}
 
 func main() {
-	returnRate := getUserRate()
-	yearsToDoubleInvestment := validateUserRate(returnRate)
-	fmt.Printf("It'll take %d years to double your investment.\n", yearsToDoubleInvestment) 
+	userReturnRate := getUserRate()
+	validRate := validateUserRate(userReturnRate)
+	yearsToDoubleInvestment := calcInvestmentReturn(validRate)
+
+	fmt.Printf("It'll take %d years to double your investment.\n", yearsToDoubleInvestment)
 }
