@@ -1,3 +1,14 @@
+/*
+Write a quick calculator that prompts for the rate of return on an investment and calculates how many years it will take to double your investment.
+
+Example:
+What is the rate of return? ABC
+Sorry. That's not a valid input.
+What is the rate of return? 4
+It will take 18 years to double your initial investment.
+*/
+
+
 package main
 
 import (
@@ -6,7 +17,7 @@ import (
 	"strconv"
 )
 
-func user_rate() string {
+func getUserRate() string {
 
 	var rate string
 	fmt.Printf("Enter a rate: ")
@@ -14,27 +25,27 @@ func user_rate() string {
 	return rate
 }
 
-func validate_user_rate(rate string) int {
+func validateUserRate(rate string) int {
 	for {
-		valid_rate, _ := regexp.MatchString("[1-9]+", rate)
-		if !valid_rate{
-			fmt.Printf("Sorry. '%s' is an invalid rate. Try again.\n", rate)
-			rate = user_rate()
+		validRate, _ := regexp.MatchString("[1-9]+", rate)
+		if !validRate {
+ 			fmt.Printf("Sorry. '%s' is an invalid rate. Try again.\n", rate)
+			rate = getUserRate()
 			fmt.Println(rate)
 			continue
 		} else {
-			user_investment_rate, _ := strconv.Atoi(rate)
-			return calculate_investment_return(user_investment_rate)
+			userInvestmentRate, _ := strconv.Atoi(rate)
+			return calcInvestmentReturn(userInvestmentRate)
 		}
 	}
 }
 
-func calculate_investment_return(user_rate int) int {
-	return 72 / user_rate
+func calcInvestmentReturn(getUserRate int) int {
+	return 72 / getUserRate
 }	
 
 func main() {
-	rate_of_return := user_rate()
-	years_to_double_investment := validate_user_rate(rate_of_return)
-	fmt.Printf("It'll take %d years to double your investment.\n", years_to_double_investment) 
+	returnRate := getUserRate()
+	yearsToDoubleInvestment := validateUserRate(returnRate)
+	fmt.Printf("It'll take %d years to double your investment.\n", yearsToDoubleInvestment) 
 }
