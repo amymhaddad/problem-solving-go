@@ -16,20 +16,11 @@ import (
 	"strconv"
 )
 
-func getUserRate() string {
-
-	var rate string
-	fmt.Printf("Enter a rate: ")
-	fmt.Scanf("%s", &rate)
-	return rate
-}
-
 func validateUserRate(rate string) int {
 	for {
 		validRate, _ := regexp.MatchString("[1-9]+", rate)
 		if !validRate {
 			fmt.Printf("Sorry. '%s' is an invalid rate. Try again.\n", rate)
-			rate = getUserRate()
 			fmt.Println(rate)
 		} else {
 			userInvestmentRate, _ := strconv.Atoi(rate)
@@ -38,15 +29,14 @@ func validateUserRate(rate string) int {
 	}
 }
 
-func calcInvestmentReturn(validRate int) int {
-
-	return 72 / validRate
-}
-
 func main() {
-	userReturnRate := getUserRate()
-	validRate := validateUserRate(userReturnRate)
-	yearsToDoubleInvestment := calcInvestmentReturn(validRate)
+	var rate string
+	fmt.Printf("Enter a rate: ")
+	fmt.Scanf("%s", &rate)
+
+	validRate := validateUserRate(rate)
+
+	yearsToDoubleInvestment := 72 / validRate
 
 	fmt.Printf("It'll take %d years to double your investment.\n", yearsToDoubleInvestment)
 }
